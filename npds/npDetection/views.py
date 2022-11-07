@@ -38,7 +38,7 @@ def addUser(request):
     return render(request, 'add-user.html')
 
 def viewUser(request):
-    return render(request, 'view-user.html')
+    return render(request, 'view-users.html')
 
 def deleteUser(request):
     return render(request, 'delete-user.html')
