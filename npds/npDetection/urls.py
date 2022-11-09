@@ -8,6 +8,7 @@ urlpatterns = [
     path('main-page/',views.mainpage,name='main-page'),
     path('admin-main/',views.adminmain,name='admin-main'),
     path('user-main/',views.usermain,name='user-main'),
+    path('user-main-page/',views.usermainpage,name='user-main-page'),
     path('admin-profile',views.admin_profile,name='admin-profile'),
     path('change-password',views.change_password,name='change-password'),
     path('changepass/',views.passChange,name='passChange'),
@@ -17,4 +18,6 @@ urlpatterns = [
     path('add-user',views.addUser,name='add-user'),
     path('view-user',views.viewUser,name='view-user'),
     path('delete-user',views.deleteUser,name='delete-user'),
+    path('add-user-db',views.addusertodb,name='add-user-db'),
+
 ]

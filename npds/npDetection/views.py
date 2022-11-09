@@ -7,6 +7,8 @@ from django.shortcuts import redirect, render
 from django.contrib.auth.models import User
 from .models import *
 
+API = "http://127.0.0.1:8000/"
+
 # Create your views here.
 def index(request):
     return render(request, 'index.html')
@@ -22,6 +24,9 @@ def usermain(request):
     user = User.objects.all()
     return render(request, 'user-main.html',{user:'user'})
 
+def usermainpage(request):
+    return render(request, 'user-main-page.html')
+
 def admin_profile(request):
     return render(request, 'admin-profile.html')
 
@@ -36,6 +41,25 @@ def checkAuthority(request):
 
 def addUser(request):
     return render(request, 'add-user.html')
+
+def addusertodb(request):
+    if request.method=="POST":
+        firstname = request.POST['firstname']
+        lastname = request.POST['lastname']
+        email = request.POST['email']
+        username = request.POST['username']
+        password = request.POST['password']
+
+        if firstname!='' and lastname!=''and email!='' and username!='' and password!='':
+            addUser = User.objects.create_user(first_name=firstname, last_name=lastname,email=email,username=username, password=password)
+            addUser.save()
+            messages.success(request, 'User Added Successfully !!')
+            return redirect(API+'add-user')
+        else:
+            messages.error(request, 'Something Went Wrong !!')
+            return redirect(API+'add-user')
+
+
 
 def viewUser(request):
     return render(request, 'view-users.html')
@@ -73,7 +97,7 @@ def userAuth(request,username,password):
         if result == 1:
             login(request,user)
 
-API = "http://127.0.0.1:8000"
+
 
 def validate(request):
     if request.method=='POST':
@@ -86,11 +110,11 @@ def validate(request):
             if result == 1:
                 login(request,user)
                 # return HttpResponse("true")
-                return redirect(API+'/admin-main/')
+                return redirect(API+'admin-main/')
             else:
                 login(request,user)
                 # return HttpResponse("true")
-                return redirect(API+'/user-main/')
+                return redirect(API+'user-main-page/')
         else:
             # return HttpResponse("false")
             messages.error(request, 'Username or Password Incorrect')
