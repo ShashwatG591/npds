@@ -6,6 +6,9 @@ from django.http import HttpResponse
 from django.shortcuts import redirect, render
 from django.contrib.auth.models import User
 from .models import *
+from django.http import HttpResponse
+from subprocess import run, PIPE
+import sys
 
 API = "http://127.0.0.1:8000/"
 
@@ -136,3 +139,8 @@ def leavepage(request):
     logout(request)
     return redirect(API)
 
+def camerarequest(request):
+    inp=request.FILES.get('InputFile')
+    run([sys.executable,r'TextExtraction.py', inp], shell=False,stdout=PIPE)
+    return render(request,'user-main-page.html')
+    
