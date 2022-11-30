@@ -4,11 +4,15 @@
 
 <div class="container">
     <div class="mt-4">
-        <a type="submit" href="{% url 'open-camera' %}" class="btn btn-secondary">Open Camera</a>
+        <a  type="submit" href="{% url 'opencamera' %}" class="btn btn-secondary">Open Camera</a>
     </div>
+    
     <div class="row mt-4">
         <div class="col-lg-6">
             <h1 class="text-center">CAMERA </h1>
+        </div>
+        <div id="#my_camera">
+
         </div>
         <div class="col-lg-6">
             <h1 class="text-center">TABLE</h1>
@@ -17,6 +21,17 @@
 </div>
 
 
+<script>
 
+function runCam(){
+    Webcam.set({
+        width: 320,
+        height: 240,
+        image_format: 'jpeg',
+        jpeg_quality: 90
+        });
+    Webcam.attach('#my_camera');
+  }
+</script>
 
 {% endblock %}
