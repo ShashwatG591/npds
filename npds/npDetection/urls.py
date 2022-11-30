@@ -19,6 +19,7 @@ urlpatterns = [
     path('view-user',views.viewUser,name='view-user'),
     path('delete-user',views.deleteUser,name='delete-user'),
     path('add-user-db',views.addusertodb,name='add-user-db'),
+    path('add-auth',views.addAuth,name='add-auth'),
     path('open-camera', views.camerarequest, name='open-camera'),
 
 ]

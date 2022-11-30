@@ -15,6 +15,11 @@ API = "http://127.0.0.1:8000/"
 # Create your views here.
 def index(request):
     return render(request, 'index.html')
+    
+def viewUser(request):
+    all_entries = NormalUser.objects.all()
+    print(all_entries)
+    return render(request, 'view-users.html',{ all_entries :'all_entries'})
 
 def mainpage(request):
     user = User.objects.all()
@@ -40,7 +45,9 @@ def addAuthority(request):
     return render(request, 'add-authority.html')
 
 def checkAuthority(request):
-    return render(request, 'check-authority.html')
+    all_entries = authorities.objects.all()
+    print(all_entries)
+    return render(request, 'check-authority.html',{all_entries:'all_entries'})
 
 def addUser(request):
     return render(request, 'add-user.html')
@@ -54,6 +61,9 @@ def addusertodb(request):
         password = request.POST['password']
 
         if firstname!='' and lastname!=''and email!='' and username!='' and password!='':
+            if firstname!='' and lastname!=''and email!='' and username!='':
+                normalUser = NormalUser(first_name=firstname, last_name=lastname,email=email,username=username)
+                normalUser.save()
             addUser = User.objects.create_user(first_name=firstname, last_name=lastname,email=email,username=username, password=password)
             addUser.save()
             messages.success(request, 'User Added Successfully !!')
@@ -62,13 +72,27 @@ def addusertodb(request):
             messages.error(request, 'Something Went Wrong !!')
             return redirect(API+'add-user')
 
+def addAuth(request):
+    if request.method=="POST":
+        name = request.POST['name']
+        email = request.POST['email']
+        contactNo = request.POST['contact']
+        location = request.POST['location']
 
-
-def viewUser(request):
-    return render(request, 'view-users.html')
+        if name!='' and email!=''and contactNo!='' and location!='':           
+            addAuth = authorities(name=name, contact=contactNo,location=location,email=email)
+            addAuth.save()
+            # return HttpResponse("done")
+            messages.success(request, 'Authority Added Successfully !!')
+            return redirect(API+'add-authority')
+        else:
+            # return HttpResponse("not done")
+            messages.error(request, 'Something Went Wrong !!')
+            return redirect(API+'add-authority')
 
 def deleteUser(request):
-    return render(request, 'delete-user.html')
+    all_data = User.objects.all()
+    return render(request, 'delete-user.html',{all_data:'add_data'})
 
 def change_password(request):
     return render(request, 'change-password.html')

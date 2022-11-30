@@ -14,15 +14,23 @@
             </tr>
         </thead>
         <tbody>
+            {% if all_data %}
+            {% for data in all_data %}
             <tr>
-                <td>1.</td>
-                <td>Shashwat Gupta</td>
-                <td>shashwat_g</td>
-                <td>03/11/2022</td>
+                <td>{{ forloop.counter }}</td>
+                <td>{{ data.first_name }} {{data.last_name}}</td>
+                <td>{{ data.username }}</td>
+                <td>{{ data.date_joined }}</td>
                 <td>
-                    <button type="submit" class="btn btn-warning" >Delete</button>
+                    <button type="submit" class="btn btn-warning">Delete</button>
                 </td>
             </tr>
+            {% endfor %}
+            {% else %}
+            <tr>
+                <td colspan="5" class="text-center text-danger">No Record Found</td>
+            </tr>
+            {% endif %}
         </tbody>
     </table>
 </div>
