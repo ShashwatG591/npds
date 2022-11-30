@@ -111,6 +111,30 @@ def passChange(request):
         user.save()
         # userAuth(request,username,password)
         messages.success(request, 'Password changed Successfully !!')
+        logout(request)
+        return redirect(API)
+    else:
+        messages.error(request, 'Something went Wrong !!')
+        return redirect(API+"change-password")
+
+def change_pass_user(request):
+    return render(request, 'change-pass-user.html')
+
+def changePass(request):
+    user  = User.objects.get(pk=request.POST['uid'])
+    if 'password2' in request.POST:
+        password = request.POST['password2']
+    else:
+        password = ""
+    
+    username = request.POST['username']
+
+    if password!="":
+        user.set_password(password)
+        user.save()
+        # userAuth(request,username,password)
+        messages.success(request, 'Password changed Successfully !!')
+        logout(request)
         return redirect(API)
     else:
         messages.error(request, 'Something went Wrong !!')

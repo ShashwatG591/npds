@@ -12,6 +12,8 @@ urlpatterns = [
     path('admin-profile',views.admin_profile,name='admin-profile'),
     path('change-password',views.change_password,name='change-password'),
     path('changepass/',views.passChange,name='passChange'),
+    path('change_pass_user',views.change_pass_user,name='change_pass_user'),
+    path('changePass/',views.changePass,name='changePass'),
     path('check-records',views.checkRecords,name='check-records'),
     path('add-authority',views.addAuthority,name='add-authority'),
     path('check-authority',views.checkAuthority,name='check-authority'),    
@@ -21,5 +23,4 @@ urlpatterns = [
     path('add-user-db',views.addusertodb,name='add-user-db'),
     path('add-auth',views.addAuth,name='add-auth'),
     path('open-camera', views.camerarequest, name='open-camera'),
-
 ]

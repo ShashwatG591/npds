@@ -48,7 +48,7 @@ while True:
 
 
 def tesseract():
-    path_to_tesseract = r'C:\Users\Rahul\AppData\Local\Tesseract-OCR\tesseract.exe'
+    path_to_tesseract = r'C:\Users\HP\AppData\Local\Tesseract-OCR\tesseract.exe'
     imagepath = 'saved_img.jpg'
     pytesseract.tesseract_cmd = path_to_tesseract
     text = pytesseract.image_to_string(Image.open(imagepath))

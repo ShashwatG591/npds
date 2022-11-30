@@ -1,0 +1,90 @@
+{% extends "user-main.html" %}
+{% block content %}
+{% load static %}
+
+<div class="container d-flex justify-content-center">
+
+    <div class="card mt-4" style="width:40%;">
+        {% if messages %}
+        {% for message in messages %}
+        <div class="alert {{ message.tags }} alert-dismissible">
+            {{ message }}
+        </div>
+        {% endfor %}
+        {% endif %}
+        <div class="card-header">
+            <h3 class="mt-2 text-center font-weight-bold text-dark text-uppercase">change Password</h3>
+        </div>
+        <form class="card-body" method="POST" action="{% url 'changePass' %}">
+            {% csrf_token %}
+            <div class="mb-3">
+                <label for="" class="form-label">New Password:</label>
+                <input type="password" class="form-control" name="password2" id="password2">
+                <small class="" id="s2"></small>
+            </div>
+
+            <div class="mb-3">
+                <label for="" class="form-label">Re-enter Password:</label>
+                <input type="password" class="form-control" name="password3" id="password3">
+                <small class="" id="s3"></small>
+            </div>
+
+            <div class="mb-2 text-center">
+                <button type="submit" class="btn btn-primary" id="submit" onclick="check()">Update Password</button>
+            </div>
+
+            <input type="hidden" name="uid" value="{{ user.id }}">
+            <input type="hidden" name="username" value="{{ user.username }}">
+        </form>
+    </div>
+</div>
+<script>
+
+    function check() {
+        let password2 = document.getElementById("password2");
+        let password3 = document.getElementById("password3");
+
+        if (password2.value == "") {
+            document.getElementById("password2").classList.add('is-invalid');
+            document.getElementById("password2").classList.remove('is-valid');
+            document.getElementById("s2").innerHTML = "Password can not be empty!";
+            document.getElementById("s2").style.color = 'red'
+
+        } else {
+            document.getElementById("password2").classList.add('is-valid');
+            document.getElementById("password2").classList.remove('is-invalid');
+            document.getElementById("s2").innerHTML = "";
+        }
+
+        if (password3.value == "") {
+            document.getElementById("password3").classList.add('is-invalid');
+            document.getElementById("password3").classList.remove('is-valid');
+            document.getElementById("s3").innerHTML = "Password can not be empty!";
+            document.getElementById("s3").style.color = 'red'
+
+        } else if (password2.value == password3.value) {
+            document.getElementById("password2").classList.add('is-valid');
+            document.getElementById("password2").classList.remove('is-invalid');
+            document.getElementById("s2").innerHTML = "";
+            document.getElementById("password3").classList.add('is-valid');
+            document.getElementById("password3").classList.remove('is-invalid');
+            document.getElementById("s3").innerHTML = "";
+            return true;
+
+        } else if (password2.value != password3.value) {
+            document.getElementById("password2").classList.add('is-invalid');
+            document.getElementById("password2").classList.remove('is-valid');
+            document.getElementById("s2").innerHTML = "New Password must be same!";
+            document.getElementById("s2").style.color = 'red'
+            document.getElementById("password3").classList.add('is-invalid');
+            document.getElementById("password3").classList.remove('is-valid');
+            document.getElementById("s3").innerHTML = "New Password must be same!";
+            document.getElementById("s3").style.color = 'red'
+
+        }
+        return false;
+    }
+
+</script>
+
+{% endblock %}
