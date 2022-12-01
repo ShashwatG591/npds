@@ -28,6 +28,12 @@ def deleteUser(request):
     all_data = User.objects.all()
     return render(request, 'delete-user.html',{'all_data':all_data})
 
+def delete(request,id):
+    delUser = User.objects.get(pk=id)
+    delUser.delete()
+    messages.success(request, 'User Deleted Successfully !!')
+    return redirect(API+'delete-user')
+
 def mainpage(request):
     user = User.objects.all()
     return render(request, 'main.html',{'user':user})

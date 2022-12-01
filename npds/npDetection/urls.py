@@ -5,6 +5,7 @@ urlpatterns = [
     path('',views.index,name='index'),
     path('validate',views.validate,name='validate'),
     path('logout',views.leavepage,name='logout'),
+    path('delete/<int:id>/',views.delete,name='delete'),
     path('main-page/',views.mainpage,name='main-page'),
     path('admin-main/',views.adminmain,name='admin-main'),
     path('user-main/',views.usermain,name='user-main'),
