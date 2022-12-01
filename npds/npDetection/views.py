@@ -41,6 +41,9 @@ def usermainpage(request):
 def admin_profile(request):
     return render(request, 'admin-profile.html')
 
+def user_profile(request):
+    return render(request, 'user-profile.html')
+
 def checkRecords(request):
     return render(request, 'check-records.html')  
 
@@ -237,13 +240,31 @@ def camerarequest(request):
             cv2.destroyAllWindows()
             break
 
-    tesseract()
-
-    return render(request,'user-main-page.html')
+    result = tesseract()
+    if result ==1:
+        messages.success(request, 'Number Plate Authenticated')
+        return redirect(API+"user-main-page")
+    else:
+        messages.error(request, 'Unauthorised Numberplate')
+        return redirect(API+"user-main-page")
 
 def tesseract():
-    path_to_tesseract = r'C:\Users\Rahul\AppData\Local\Tesseract-OCR\tesseract.exe'
+    path_to_tesseract = r'C:\Users\HP\AppData\Local\Tesseract-OCR\tesseract.exe'
     imagepath = 'saved_img.jpg'
     pytesseract.tesseract_cmd = path_to_tesseract
     text = pytesseract.image_to_string(Image.open(imagepath))
     print(text[:])
+    result = checkNP(text[:])
+    return result
+
+
+def checkNP(num):
+    if num !="":
+        query1 = "SELECT `auth` FROM `npdetection_numberplate` WHERE `numberPlate` ="+num+";"
+        with connection.cursor() as cursor:
+            cursor.execute(query1)
+            res = cursor.fetchone()
+            result = res[0]
+        return result 
+
+# C:\Users\Rahul\AppData\Local\Tesseract-OCR\tesseract.exe
