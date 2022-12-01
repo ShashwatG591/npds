@@ -20,20 +20,24 @@ def index(request):
     return render(request, 'index.html')
     
 def viewUser(request):
-    all_entries = NormalUser.objects.all()
+    all_entries = User.objects.all()
     print(all_entries)
-    return render(request, 'view-users.html',{ all_entries :'all_entries'})
+    return render(request, 'view-users.html',{ 'all_entries' :all_entries})
+
+def deleteUser(request):
+    all_data = User.objects.all()
+    return render(request, 'delete-user.html',{'all_data':all_data})
 
 def mainpage(request):
     user = User.objects.all()
-    return render(request, 'main.html',{user:'user'})
+    return render(request, 'main.html',{'user':user})
 
 def adminmain(request):
     return render(request, 'admin-main.html')
 
 def usermain(request):
     user = User.objects.all()
-    return render(request, 'user-main.html',{user:'user'})
+    return render(request, 'user-main.html',{'user':user})
 
 def usermainpage(request):
     return render(request, 'user-main-page.html')
@@ -45,7 +49,12 @@ def user_profile(request):
     return render(request, 'user-profile.html')
 
 def checkRecords(request):
-    return render(request, 'check-records.html')  
+    all_entries = numPlateRecords.objects.all()
+    return render(request, 'check-records.html', {'all_entries':all_entries})  
+
+def check_records_user(request):
+    all_entries = numPlateRecords.objects.all()
+    return render(request, 'check-records-user.html', {'all_entries':all_entries})
 
 def addAuthority(request):
     return render(request, 'add-authority.html')
@@ -53,7 +62,7 @@ def addAuthority(request):
 def checkAuthority(request):
     all_entries = authorities.objects.all()
     print(all_entries)
-    return render(request, 'check-authority.html',{all_entries:'all_entries'})
+    return render(request, 'check-authority.html',{'all_entries':all_entries})
 
 def addUser(request):
     return render(request, 'add-user.html')
@@ -95,10 +104,6 @@ def addAuth(request):
             # return HttpResponse("not done")
             messages.error(request, 'Something Went Wrong !!')
             return redirect(API+'add-authority')
-
-def deleteUser(request):
-    all_data = User.objects.all()
-    return render(request, 'delete-user.html',{all_data:'add_data'})
 
 def change_password(request):
     return render(request, 'change-password.html')
@@ -153,8 +158,6 @@ def userAuth(request,username,password):
     if user is not None:
         if result == 1:
             login(request,user)
-
-
 
 def validate(request):
     if request.method=='POST':
@@ -240,11 +243,13 @@ def camerarequest(request):
             cv2.destroyAllWindows()
             break
 
-    result = tesseract()
-    if result ==1:
+    auth,num = tesseract()
+    if auth ==1:
+        AddtoDB(num,auth)
         messages.success(request, 'Number Plate Authenticated')
         return redirect(API+"user-main-page")
     else:
+        AddtoDB(num,'0')
         messages.error(request, 'Unauthorised Numberplate')
         return redirect(API+"user-main-page")
 
@@ -255,7 +260,7 @@ def tesseract():
     text = pytesseract.image_to_string(Image.open(imagepath))
     print(text[:])
     result = checkNP(text[:])
-    return result
+    return result,text[:]
 
 
 def checkNP(num):
@@ -265,6 +270,9 @@ def checkNP(num):
             cursor.execute(query1)
             res = cursor.fetchone()
             result = res[0]
-        return result 
+        return result
 
+def AddtoDB(num,auth):
+    res = numPlateRecords(numplate=num,auth=auth)
+    res.save()
 # C:\Users\Rahul\AppData\Local\Tesseract-OCR\tesseract.exe

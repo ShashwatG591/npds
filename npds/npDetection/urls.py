@@ -24,4 +24,5 @@ urlpatterns = [
     path('add-auth',views.addAuth,name='add-auth'),
     path('opencamera', views.camerarequest, name='opencamera'),
     path('user-profile',views.user_profile, name='user-profile'),
+    path('check-user-records',views.check_records_user, name='check-user-records'),
 ]

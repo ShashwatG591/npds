@@ -13,8 +13,8 @@
     {% endfor %}
     {% endif %}
     <div class="card mt-4">
-        <div class="card-header ">
-            <h3 class="mt-2 text-center font-weight-bold text-dark text-uppercase">Add User</h3>
+        <div class="card-header " style="background-color: #1b4b58 ;">
+            <h3 class="mt-2 text-center font-weight-bold text-white text-uppercase">Add User</h3>
         </div>
         <div class="card-body">
             <form method="post" action="{% url 'add-user-db' %}">
@@ -40,7 +40,8 @@
                     <input type="password" class="form-control" id="password" name="password">
                 </div>
                 <div class="mb-3 text-center">
-                    <button type="submit" class="btn btn-primary">Submit</button>
+                    <button type="submit" class="btn text-white" 
+                    style="background-color: #1b4b58 ;">Submit</button>
                 </div>
             </form>
         </div>

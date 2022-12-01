@@ -13,25 +13,27 @@
     {% endfor %}
     {% endif %}
     <div class="row mt-4">
-        <div class="border-left-primary shadow h-100 py-2 col-6">
-            <div class="card">
-            <center>
-                <a type="submit" href="{% url 'opencamera' %}" class="text-black">
-                    <img src="{% static 'icon/cctv-camera.png' %}" class="mt-3" alt="camera.png" style="width: 100px;">
-                    <h1 class="text-center mt-3 mb-3">OPEN CAMERA </h1>
-                </a>
-            </center>
+        <div class="col-6">
+            <a  href="{% url 'opencamera' %}" class="text-black">
+                <div class="card shadow h-100 py-2" style="border-color:black;  border-width: 2px;">
+                    <center>
+                        <img src="{% static 'icon/cctv-camera.png' %}" class="mt-3" alt="camera.png"
+                            style="width: 100px;">
+                        <h1 class="text-center mt-3 mb-3">OPEN CAMERA </h1>
+                    </center>
+                </div>
+            </a>
         </div>
-        </div>
-        <div class="border-left-primary shadow h-100 py-2 col-6">
-            <div class="card">
-            <center>
-                <a href="" class="text-black">
-                    <img src="{% static 'icon/frequency.png' %}" class="mt-3" alt="records.png" style="width: 100px;">
-                    <h1 class="text-center mt-3 mb-3">CHECK RECORDS</h1>
-                </a>
-            </center>
-        </div>
+        <div class="col-6">
+            <a href="{% url 'check-user-records' %}" class="text-black">
+                <div class="card shadow h-100 py-2 " style="border-color:black;  border-width: 2px;">
+                    <center>
+                        <img src="{% static 'icon/frequency.png' %}" class="mt-3" alt="records.png"
+                            style="width: 100px;">
+                        <h1 class="text-center mt-3 mb-3">CHECK RECORDS</h1>
+                    </center>
+                </div>
+            </a>
         </div>
     </div>
 </div>

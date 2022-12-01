@@ -36,18 +36,18 @@
 <body>
 
   <!-- ======= Header ======= -->
-  <header id="header" class="fixed-top">
+  <header id="header" class="fixed-top" style="background-color: #1b4b58 ;">
     <div class="container d-flex align-items-center justify-content-between">
 
-      <h1 class="logo"><a href="{% url 'admin-main' %}">NPDS</a></h1>
+      <h1 class="logo"><a class="text-white" href="{% url 'admin-main' %}">NPDS</a></h1>
       <!-- Uncomment below if you prefer to use an image logo -->
       <!-- <a href="index.html" class="logo"><img src="assets/img/logo.png" alt="" class="img-fluid"></a>-->
 
       <nav id="navbar" class="navbar">
         <ul>
-            <li><a class="nav-link text-dark scrollto active" href="{% url 'admin-main' %}">Home</a></li>
+            <li><a class="nav-link text-white scrollto active" href="{% url 'admin-main' %}">Home</a></li>
          
-          <li class="dropdown"><a><span>{{ user.first_name }}</span> <i class="bi bi-chevron-down"></i></a>
+          <li class="dropdown text-white"><a><span>{{ user.first_name }}</span> <i class="bi bi-chevron-down"></i></a>
             <ul>
               <li><a href="{% url 'admin-profile' %}">Profile</a></li>
               <li><a href="{% url 'change-password' %}">Change Password</a></li>

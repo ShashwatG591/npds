@@ -1,8 +1,8 @@
-{% extends "main.html" %}
+{% extends "user-main.html" %}
 {% block content %}
 {% load static %}
 
-
+{{all_entries.auth}}
 <div class="container" style="width: 50%;">
     <table class="mt-3 table table-success table-hover table-striped-columns text-center">
         <thead>
@@ -17,10 +17,10 @@
             {% if all_entries %}
             {% for data in all_entries %}
             <tr>
-                <td>{{ forloop.counter }}</td>
-                <td>{{ data.numPlate }}</td>
-                <td>{{ data.auth }}</td>
-                <td>{{ data.dateAndTime }}</td>
+              <td>{{ forloop.counter }}</td>
+              <td>{{ data.numPlate }}</td>
+              <td>{{ data.auth }}</td>
+              <td>{{ data.dateAndTime }}</td>
             </tr>
             {% endfor %}
             {% else %}
