@@ -248,37 +248,40 @@ def camerarequest(request):
             print("Program ended.")
             cv2.destroyAllWindows()
             break
-
-    auth,num = tesseract()
+    
+    auth = tesseract()
     if auth ==1:
-        AddtoDB(num,auth)
+        # AddtoDB(auth)
         messages.success(request, 'Number Plate Authenticated')
         return redirect(API+"user-main-page")
     else:
-        AddtoDB(num,'0')
+        # AddtoDB('0')
         messages.error(request, 'Unauthorised Numberplate')
         return redirect(API+"user-main-page")
 
 def tesseract():
-    path_to_tesseract = r'C:\Users\HP\AppData\Local\Tesseract-OCR\tesseract.exe'
+    path_to_tesseract = r'C:\Users\Rahul\AppData\Local\Tesseract-OCR\tesseract.exe'
     imagepath = 'saved_img.jpg'
     pytesseract.tesseract_cmd = path_to_tesseract
     text = pytesseract.image_to_string(Image.open(imagepath))
     print(text[:])
-    result = checkNP(text[:])
-    return result,text[:]
+    AddtoDB(text[:], '0')
+    # result = checkNP(text[:13])
+    return 0
 
 
-def checkNP(num):
-    if num !="":
-        query1 = "SELECT `auth` FROM `npdetection_numberplate` WHERE `numberPlate` ="+num+";"
-        with connection.cursor() as cursor:
-            cursor.execute(query1)
-            res = cursor.fetchone()
-            result = res[0]
-        return result
+# def checkNP(num):
+#     if num =="":
+#         query1 = "SELECT `auth` FROM `npdetection_numberplate` WHERE numPlate ="+num+";"
+#         with connection.cursor() as cursor:
+#             cursor.execute(query1)
+#             res = cursor.fetchone()
+#             result = res[0]
+#         return result
+#     else:
+#         return None
 
 def AddtoDB(num,auth):
-    res = numPlateRecords(numplate=num,auth=auth)
+    res = numPlateRecords(numPlate=num,auth=auth)
     res.save()
 # C:\Users\Rahul\AppData\Local\Tesseract-OCR\tesseract.exe
